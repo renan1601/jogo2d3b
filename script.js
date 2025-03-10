@@ -10,6 +10,14 @@ if (localStorage.getItem('recordePulos')) {
     recordePulos = parseInt(localStorage.getItem('recordePulos'))
 }
 
+// Carregar imagem de fundo
+const fundo = new Image()
+fundo.src = 'https://img.freepik.com/vetores-premium/fundo-do-jogo-da-ilustracao-da-cidade-a-noite-do-vetor_303920-20.jpg'
+
+// Carregar imagem do capacete
+const capacete = new Image()
+capacete.src = 'https://www.clipartmax.com/png/middle/203-2037283_caboenrolado-moto-capacete-motocross-26danorte-grau-desenho-moto-no-grau.png'
+
 document.addEventListener('keypress', (e) => {
     if(e.code == 'Space' && personagem.pulando == false && !gameOver){
         personagem.velocidadey = 15
@@ -28,8 +36,8 @@ const personagem = {
 }
 
 function desenharPersonagem(){
-    ctx.fillStyle = 'white'
-    ctx.fillRect(personagem.x, personagem.y, personagem.largura, personagem.altura)
+    // Desenhar a imagem do capacete
+    ctx.drawImage(capacete, personagem.x, personagem.y, personagem.largura, personagem.altura)
 }
 
 function atualizarPersonagem(){
@@ -84,13 +92,13 @@ function detectarColisao(){
 }
 
 function desenharGameOver(){
-    ctx.fillStyle = 'black'
+    ctx.fillStyle = 'white'
     ctx.font = '50px Arial'
-    ctx.fillText('GAME OVER', canvas.width / 2 - 150, canvas.height / 2)
+    ctx.fillText('PERDEU LADRAO', canvas.width / 2 - 150, canvas.height / 2)
 }
 
 function desenharContadorPulos(){
-    ctx.fillStyle = 'black'
+    ctx.fillStyle = 'white'
     ctx.font = '20px Arial'
     ctx.fillText('Pulos: ' + contadorPulos, 20, 30)
     ctx.fillText('Recorde: ' + recordePulos, 20, 60)
@@ -102,8 +110,9 @@ function loop(){
         return
     }
     
-    ctx.clearRect(0, 0, canvas.width, canvas.height)
-    
+    // Desenhar fundo
+    ctx.drawImage(fundo, 0, 0, canvas.width, canvas.height)
+
     desenharPersonagem()
     desenharObstaculo()
     atualizarPersonagem()
@@ -114,4 +123,10 @@ function loop(){
     requestAnimationFrame(loop)
 }
 
-loop()
+fundo.onload = () => {
+    loop() // Iniciar o loop quando a imagem de fundo estiver carregada
+}
+
+capacete.onload = () => {
+    loop() // Iniciar o loop quando a imagem do capacete estiver carregada
+}
