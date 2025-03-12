@@ -57,7 +57,7 @@ const obstaculo = {
     y: canvas.height - 100,
     largura: 50,
     altura: 100,
-    velocidadex: 7
+    velocidadex: 5
 }
 
 function desenharObstaculo(){
@@ -113,20 +113,16 @@ function loop(){
     // Desenhar fundo
     ctx.drawImage(fundo, 0, 0, canvas.width, canvas.height)
 
-    desenharPersonagem()
-    desenharObstaculo()
-    atualizarPersonagem()
-    atualizarObstaculo()
-    detectarColisao()
-    desenharContadorPulos()
+   
+    
     
     requestAnimationFrame(loop)
 }
 
 fundo.onload = () => {
-    loop() // Iniciar o loop quando a imagem de fundo estiver carregada
+    loop() 
 }
 
 capacete.onload = () => {
-    loop() // Iniciar o loop quando a imagem do capacete estiver carregada
+    loop() 
 }
