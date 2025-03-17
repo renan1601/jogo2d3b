@@ -1,26 +1,26 @@
 const canvas = document.getElementById('jogo2D')
 const ctx = canvas.getContext('2d')
-const gravidade = 0.5
+const gravidade = 0.2
 let gameOver = false
 let contadorPulos = 0
 let recordePulos = 0
 
-// Carregar recorde do armazenamento local
 if (localStorage.getItem('recordePulos')) {
     recordePulos = parseInt(localStorage.getItem('recordePulos'))
 }
 
-// Carregar imagem de fundo
 const fundo = new Image()
 fundo.src = 'https://img.freepik.com/vetores-premium/fundo-do-jogo-da-ilustracao-da-cidade-a-noite-do-vetor_303920-20.jpg'
 
-// Carregar imagem do capacete
 const capacete = new Image()
-capacete.src = 'https://www.clipartmax.com/png/middle/203-2037283_caboenrolado-moto-capacete-motocross-26danorte-grau-desenho-moto-no-grau.png'
+capacete.src = 'https://www.pngarts.com/files/12/Wheeling-Motocross-Free-PNG-Image.png'
+
+const obstaculoImg = new Image()
+obstaculoImg.src = 'https://images.vexels.com/content/158457/preview/car-police-bumper-illustration-b8c26f.png'
 
 document.addEventListener('keypress', (e) => {
     if(e.code == 'Space' && personagem.pulando == false && !gameOver){
-        personagem.velocidadey = 15
+        personagem.velocidadey = 10
         personagem.pulando = true
         contadorPulos++
     }
@@ -36,7 +36,6 @@ const personagem = {
 }
 
 function desenharPersonagem(){
-    // Desenhar a imagem do capacete
     ctx.drawImage(capacete, personagem.x, personagem.y, personagem.largura, personagem.altura)
 }
 
@@ -57,12 +56,11 @@ const obstaculo = {
     y: canvas.height - 100,
     largura: 50,
     altura: 100,
-    velocidadex: 5
+    velocidadex: 3
 }
 
 function desenharObstaculo(){
-    ctx.fillStyle = 'crimson'
-    ctx.fillRect(obstaculo.x, obstaculo.y, obstaculo.largura, obstaculo.altura)
+    ctx.drawImage(obstaculoImg, obstaculo.x, obstaculo.y, obstaculo.largura, obstaculo.altura)
 }
 
 function atualizarObstaculo(){
@@ -94,7 +92,7 @@ function detectarColisao(){
 function desenharGameOver(){
     ctx.fillStyle = 'white'
     ctx.font = '50px Arial'
-    ctx.fillText('PERDEU LADRAO', canvas.width / 2 - 150, canvas.height / 2)
+    ctx.fillText('PERDEU LADRAO', canvas.width / 2 - 210, canvas.height / 2)
 }
 
 function desenharContadorPulos(){
@@ -110,11 +108,13 @@ function loop(){
         return
     }
     
-    // Desenhar fundo
     ctx.drawImage(fundo, 0, 0, canvas.width, canvas.height)
-
-   
-    
+    desenharObstaculo()
+    desenharPersonagem()
+    desenharContadorPulos()
+    atualizarPersonagem()
+    atualizarObstaculo()
+    detectarColisao()
     
     requestAnimationFrame(loop)
 }
@@ -125,4 +125,8 @@ fundo.onload = () => {
 
 capacete.onload = () => {
     loop() 
+}
+
+obstaculoImg.onload = () => {
+    loop()
 }
