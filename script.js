@@ -67,7 +67,7 @@ function atualizarObstaculo(){
     obstaculo.x -= obstaculo.velocidadex
     if(obstaculo.x <= 0 - obstaculo.largura){
         obstaculo.x = canvas.width
-        obstaculo.velocidadex += 0.05 // Aumento mais gradual da velocidade
+        obstaculo.velocidadex += 0.05 
         let nova_altura = (Math.random() * 50) + 100
         obstaculo.altura = nova_altura
         obstaculo.y = canvas.height - nova_altura
@@ -90,9 +90,9 @@ function detectarColisao(){
 }
 
 function desenharGameOver(){
-    ctx.fillStyle = 'white'
+    ctx.fillStyle = 'yellow'
     ctx.font = '50px Arial'
-    let texto = 'PERDEU LADRAO'
+    let texto = '𝑷𝑬𝑹𝑫𝑬𝑼 𝑳𝑨𝑫𝑹𝑨𝑶'
     let larguraTexto = ctx.measureText(texto).width
     ctx.fillText(texto, (canvas.width - larguraTexto) / 2, canvas.height / 2)
 }
